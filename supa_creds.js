@@ -1,0 +1,3 @@
+export const supabaseUrl = 'https://nlflyidhiatjfxesfktn.supabase.co';
+export const supabaseKey =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5sZmx5aWRoaWF0amZ4ZXNma3RuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTcxMjUwMzMsImV4cCI6MjAzMjcwMTAzM30.bw7abtkpnXTIQn7JQzE92eopryApqeo7jmezHGMqhy0';

@@ -1,0 +1,201 @@
+.ext-modal {
+    position: fixed;
+    z-index: 9999;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.58);
+    top: 0;
+    left: 0;
+    color: white !important;
+}
+
+.ext-modal-content {
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    background-color: #efefef;
+}
+
+.ext-modal-header {
+    border-radius: 25px 25px 0 0 !important;
+    background-color: #2bb8f4;
+    height: 40px;
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.ext-modal-button-left,
+.ext-modal-button-right,
+.ext-modal-center-button {
+    position: absolute;
+    display: flex;
+    align-items: center;
+}
+
+.ext-nav-text {
+    background: #2bb8f4 !important;
+    font-size: 17px !important;
+    color: white !important;
+    border: none !important;
+    outline: none !important;
+    cursor: pointer;
+}
+
+.ext-modal-button-left {
+    top: 0;
+    bottom: 0;
+    right: 280px;
+    z-index: 30;
+}
+
+.ext-modal-center-button {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    justify-content: center;
+}
+
+.ext-modal-button-right {
+    top: 0;
+    bottom: 0;
+    left: 280px;
+    z-index: 30;
+}
+
+.ext-modal-body {
+    border-radius: 10px;
+    border: 1px solid #2da2d4;
+    position: relative;
+    padding: 18px 20px 10px 20px;
+    height: 200px;
+    margin: 20px;
+}
+
+#ext-prompt-box {
+    margin-top: 0;
+}
+
+#ext-start-chat-button {
+    margin: 0 20px 20px 20px;
+    border-radius: 10px;
+    border: 1px solid #2da2d4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    font-size: 18px;
+    height: 50px;
+}
+
+#ext-start-chat-button:hover {
+    background: #2da2d4;
+    color: white;
+}
+
+.ext-context-text {
+    position: absolute;
+    padding: 4px;
+    color: #3582a3;
+    font-size: 14px;
+    left: 20px;
+    top: -1px;
+    transform: translateY(-50%);
+    background-color: #efefef;
+}
+
+.ext-edit-button {
+    position: absolute;
+    right: 30px;
+    top: -1px;
+    transform: translateY(-50%);
+    background-color: #efefef;
+    padding: 3px;
+    border: none !important;
+    outline: none !important;
+}
+
+.ext-check-button {
+    position: absolute;
+    right: 30px;
+    top: -1px;
+    transform: translateY(-50%);
+    background-color: #efefef;
+    padding: 3px;
+    border: none !important;
+    outline: none !important;
+}
+
+.ext-list-dot-dotted {
+    border: 1px dashed #2bb8f4;
+    border-radius: 9999px;
+    height: 12px;
+    width: 12px;
+}
+
+.ext-list-dot {
+    border: 1px solid #2bb8f4;
+    border-radius: 9999px;
+    height: 12px;
+    width: 12px;
+}
+
+.ext-list-dot-div {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    bottom: 0;
+    left: 20px;
+}
+
+.ext-place-holder {
+    height: 38px;
+    position: relative;
+    border: 1px dashed #2bb8f4;
+    border-radius: 10px;
+    width: 318px;
+    cursor: text;
+}
+
+.ext-list-text-area {
+    font-size: 14px;
+    color: black;
+    overflow: hidden;
+    resize: none;
+    outline: none !important;
+    padding: 0 !important;
+    border: none !important;
+    padding: 7px 14px 7px 0px !important;
+    height: 42px;
+    min-height: 0 !important;
+    width: 268px;
+    border-radius: 0px 10px 10px 0px;
+    margin-left: 50px;
+    box-sizing: border-box;
+}
+.ext-list-text-area:focus {
+    outline: none !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.ext-list-item {
+    position: relative;
+    border-radius: 10px;
+    background: white;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.ext-text-bold {
+    font-weight: bold;
+}
