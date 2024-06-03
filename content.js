@@ -39,20 +39,38 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
                     const contextPlaceHolder = document.getElementById(
                         'extension-context-place-holder'
                     );
+                    const listItemContextMenu = document.getElementById(
+                        'extension-delete-list-item-div'
+                    );
+                    const deleteContextMenuButton = document.getElementById(
+                        'extension-delete-list-item-button'
+                    );
 
                     const contextList = [];
+                    let deleteListItem;
 
                     promptNav.style.fontWeight = '700';
 
                     contextCheck.remove();
                     contextListItem.remove();
                     contextPlaceHolder.remove();
+                    listItemContextMenu.remove();
 
                     modal.addEventListener('click', (e) => {
+                        listItemContextMenu.remove();
                         e.stopPropagation();
                     });
                     modalBackground.addEventListener('click', () => {
                         container.remove();
+                    });
+                    deleteContextMenuButton.addEventListener('click', () => {
+                        deleteListItem.element.remove();
+                        contextList.splice(
+                            contextList.findIndex(
+                                (v) => v.id === deleteListItem.id
+                            ),
+                            1
+                        );
                     });
 
                     contextEdit.addEventListener('click', () => {
@@ -98,6 +116,15 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
                         newItem.textarea = newItem.element.children[1];
                         newItem.textarea.addEventListener('input', () => {
                             handleTextarea(newItem);
+                        });
+                        newItem.element.addEventListener('contextmenu', (e) => {
+                            e.preventDefault();
+                            deleteListItem = newItem;
+                            modal.appendChild(listItemContextMenu);
+                            listItemContextMenu.style.left =
+                                e.clientX.toString() + 'px';
+                            listItemContextMenu.style.top =
+                                e.clientY.toString() + 'px';
                         });
                         newItem.textarea.dispatchEvent(new Event('input'));
                         newItem.textarea.focus();

@@ -187,6 +187,28 @@
     box-shadow: none !important;
 }
 
+.ext-delete-list-item-button {
+    border-radius: 4px;
+    color: white;
+    font-size: 13px;
+    padding-left: 6px;
+    padding-right: 6px;
+}
+.ext-delete-list-item-button:hover {
+    background: #ca3838;
+}
+
+.ext-delete-list-item-div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    padding: 3px;
+    position: fixed;
+    border: 1px solid #7f7f7f;
+    background: #2a2a2af3;
+}
+
 .ext-list-item {
     position: relative;
     border-radius: 10px;
