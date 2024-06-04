@@ -6,7 +6,7 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
         } else {
             fetch(chrome.runtime.getURL('components/modal/index.html'))
                 .then((response) => response.text())
-                .then((html) => {
+                .then(async (html) => {
                     const container = document.createElement('div');
                     container.id = 'extension-container';
                     container.innerHTML = html;
@@ -45,6 +45,12 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
                     const deleteContextMenuButton = document.getElementById(
                         'extension-delete-list-item-button'
                     );
+                    const contextListHolder = document.getElementById(
+                        'extension-context-list-holder'
+                    );
+                    const signInArrow = document.getElementById(
+                        'extension-sign-in-arrow'
+                    );
 
                     const contextList = [];
                     let deleteListItem;
@@ -55,6 +61,9 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
                     contextListItem.remove();
                     contextPlaceHolder.remove();
                     listItemContextMenu.remove();
+                    signInArrow.remove();
+                    contextEdit.disabled = true;
+                    contextEdit.children[0].style.stroke = '#000000';
 
                     modal.addEventListener('click', (e) => {
                         listItemContextMenu.remove();
@@ -71,6 +80,10 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
                             ),
                             1
                         );
+                        chrome.runtime.sendMessage({
+                            action: 'update-context',
+                            contextList,
+                        });
                     });
 
                     contextEdit.addEventListener('click', () => {
@@ -81,7 +94,7 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
                                 'none';
                             li.textarea.style.pointerEvents = 'all';
                         });
-                        contextBox.appendChild(contextPlaceHolder);
+                        contextListHolder.appendChild(contextPlaceHolder);
                     });
                     contextCheck.addEventListener('click', () => {
                         contextCheck.remove();
@@ -102,13 +115,23 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
                     }
 
                     contextPlaceHolder.addEventListener('click', () => {
+                        createContextListItem().textarea.focus();
+                        chrome.runtime.sendMessage({
+                            action: 'update-context',
+                            contextList,
+                        });
+                    });
+                    function createContextListItem(
+                        id = Math.random().toString(),
+                        text = ''
+                    ) {
                         const newItem = {
                             element: contextListItem.cloneNode(true),
-                            id: Math.random().toString(),
-                            text: '',
+                            id,
+                            text,
                         };
                         contextList.push(newItem);
-                        contextBox.insertBefore(
+                        contextListHolder.insertBefore(
                             newItem.element,
                             contextPlaceHolder
                         );
@@ -126,9 +149,24 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
                             listItemContextMenu.style.top =
                                 e.clientY.toString() + 'px';
                         });
+                        newItem.textarea.value = text;
                         newItem.textarea.dispatchEvent(new Event('input'));
-                        newItem.textarea.focus();
+                        return newItem;
+                    }
+
+                    const response = await chrome.runtime.sendMessage({
+                        action: 'get-lists',
                     });
+                    console.log(response);
+
+                    if (response?.signedOut) {
+                        modalBackground.appendChild(signInArrow);
+                    } else {
+                        response?.dbLists?.contexts?.forEach((context) => {
+                            createContextListItem(context.id, context.text);
+                        });
+                        contextEdit.disabled = false;
+                    }
                 })
                 .catch((error) => {
                     console.warn(error);

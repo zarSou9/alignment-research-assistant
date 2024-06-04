@@ -75,20 +75,22 @@
                     </g>
                 </svg>
             </button>
-            <div id="extension-context-list-item" class="ext-list-item">
-                <div class="ext-list-dot-div">
-                    <button class="ext-list-dot"></button>
+            <div id="extension-context-list-holder" class="ext-list-holder">
+                <div id="extension-context-list-item" class="ext-list-item">
+                    <div class="ext-list-dot-div">
+                        <button class="ext-list-dot"></button>
+                    </div>
+                    <textarea rows="1" class="ext-list-text-area"></textarea>
                 </div>
-                <textarea rows="1" class="ext-list-text-area"></textarea>
+                <button
+                    id="extension-context-place-holder"
+                    class="ext-place-holder"
+                >
+                    <div class="ext-list-dot-div">
+                        <div class="ext-list-dot-dotted"></div>
+                    </div>
+                </button>
             </div>
-            <button
-                id="extension-context-place-holder"
-                class="ext-place-holder"
-            >
-                <div class="ext-list-dot-div">
-                    <div class="ext-list-dot-dotted"></div>
-                </div>
-            </button>
         </div>
         <div id="ext-prompt-box" class="ext-modal-body">
             <p class="ext-context-text">Prompt</p>
@@ -130,5 +132,31 @@
                 Delete
             </button>
         </div>
+    </div>
+    <div id="extension-sign-in-arrow">
+        <svg
+            height="60px"
+            width="60px"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g
+                id="SVGRepo_tracerCarrier"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            ></g>
+            <g id="SVGRepo_iconCarrier">
+                <path
+                    d="M12 4V20M12 4L8 8M12 4L16 8"
+                    stroke="#60bffb"
+                    stroke-width="0.792"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                ></path>
+            </g>
+        </svg>
+        <p class="extension-sign-in-notif">Please sign in</p>
     </div>
 </div>
