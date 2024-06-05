@@ -203,6 +203,7 @@
     border-radius: 0px 10px 10px 0px;
     margin-left: 50px;
     box-sizing: border-box;
+    pointer-events: none;
 }
 .ext-list-text-area:focus {
     outline: none !important;

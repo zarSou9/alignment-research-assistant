@@ -97,7 +97,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                 if (chrome.runtime.lastError) {
                     // auth was not successful
                 } else {
-                    console.log('hello');
                     const url = new URL(redirectedTo);
                     const params = new URLSearchParams(
                         url.hash.replace('#', '')
@@ -112,9 +111,31 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                     chrome.tabs.create({
                         url: './../../pages/success/index.html',
                     });
+
+                    chrome.tabs.query({}, (tabs) => {
+                        tabs.forEach((tab) => {
+                            chrome.tabs.sendMessage(tab.id, {
+                                action: 'handle-sign-in',
+                            });
+                        });
+                    });
                 }
             }
         );
+    } else if (request.action === 'sign-out') {
+        supabase.auth.signOut().then(() => {
+            chrome.storage.local.set({
+                session: null,
+            });
+            chrome.tabs.query({}, (tabs) => {
+                tabs.forEach((tab) => {
+                    chrome.tabs.sendMessage(tab.id, {
+                        action: 'handle-sign-out',
+                    });
+                });
+            });
+            sendResponse({ signedOut: true });
+        });
     } else if (request.action === 'update-context') {
         supabase.auth.getSession().then(({ data }) => {
             if (!data?.session) {
@@ -140,19 +161,18 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         });
     } else if (request.action === 'get-lists') {
         supabase.auth.getSession().then(({ data }) => {
+            console.log(data?.session);
             if (!data?.session) {
-                supabase.auth.signOut().then(() => {
-                    sendResponse({ signedOut: true });
-                });
-                return;
+                sendResponse({ signedOut: true });
+            } else {
+                supabase
+                    .from('users')
+                    .select('contexts, prompts')
+                    .eq('id', data.session.user.id)
+                    .then(({ data: listData }) => {
+                        sendResponse({ dbLists: listData[0] });
+                    });
             }
-            supabase
-                .from('users')
-                .select('contexts, prompts')
-                .eq('id', data.session.user.id)
-                .then(({ data: listData }) => {
-                    sendResponse({ dbLists: listData[0] });
-                });
         });
     }
     return true;

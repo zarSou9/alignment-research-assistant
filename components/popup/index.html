@@ -1,36 +1,36 @@
 <!doctype html>
 <html>
-  <head>
-    <title>Technical Alignment Research Assistant</title>
-    <link rel="stylesheet" href="/dist/css/styles.css" />
-  </head>
-  <body>
-    <div
-      id="container"
-      class="flex flex-col w-[185px] items-center justify-center"
-    >
-      <p class="text-[20px]">TARA</p>
-      <div class="h-[.3px] bg-[#a5a5a5] w-[166px]"></div>
-      <button
-        class="bg-[#4984f1] flex p-[3px] pr-[15px] my-[10px] rounded-[3px] text-white"
-        id="login_button"
-      >
-        <img
-          class="size-[20px] mr-[10px] rounded-sm"
-          src="/static/google.png"
-          alt="Google Logo"
-          class="mr-2"
-        />
-        Continue with google
-      </button>
-      <button
-        class="border-[#d04e4e] border-[1px] w-[166px] flex items-center justify-center my-[10px] p-[3px] rounded-[3px] hover:bg-[#d04e4e] hover:text-white"
-        id="signout_button"
-      >
-        Sign out
-      </button>
-    </div>
+    <head>
+        <title>Technical Alignment Research Assistant</title>
+        <link rel="stylesheet" href="/dist/css/styles.css" />
+    </head>
+    <body>
+        <div
+            id="container"
+            class="flex flex-col w-[185px] items-center justify-center"
+        >
+            <p class="text-[20px]">TARA</p>
+            <div class="h-[.3px] bg-[#a5a5a5] w-[166px]"></div>
+            <button
+                class="bg-[#4984f1] flex p-[3px] pr-[15px] my-[10px] rounded-[3px] text-white"
+                id="login_button"
+            >
+                <img
+                    class="size-[20px] mr-[10px] rounded-sm"
+                    src="/static/google.png"
+                    alt="Google Logo"
+                    class="mr-2"
+                />
+                Continue with google
+            </button>
+            <button
+                class="border-[#d04e4e] border-[1px] w-[166px] flex items-center justify-center my-[10px] p-[3px] rounded-[3px] hover:bg-[#d04e4e] hover:text-white"
+                id="signout_button"
+            >
+                Sign out
+            </button>
+        </div>
 
-    <script type="module" src="/dist/popup.bundle.js"></script>
-  </body>
+        <script type="module" src="./index.js"></script>
+    </body>
 </html>
