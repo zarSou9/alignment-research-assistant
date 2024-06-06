@@ -64,6 +64,7 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
                     const contextList = [];
                     let deleteListItem;
                     let unSaved = false;
+                    let selectedContext;
 
                     promptNav.style.fontWeight = '700';
 
@@ -108,14 +109,17 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
                         contextEdit.remove();
                         contextBox.appendChild(contextCheck);
                         contextList.forEach((li) => {
-                            li.element.children[0].children[0].style.pointerEvents =
-                                'none';
                             li.textarea.style.pointerEvents = 'all';
                         });
                         contextListHolder.appendChild(contextPlaceHolder);
                     });
                     contextCheck.addEventListener('click', () => {
-                        viewingMode();
+                        contextCheck.remove();
+                        contextPlaceHolder.remove();
+                        contextBox.appendChild(contextEdit);
+                        contextList.forEach((li) => {
+                            li.textarea.style.pointerEvents = 'none';
+                        });
                     });
 
                     function handleTextarea(li) {
@@ -155,6 +159,24 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
                             handleTextarea(newItem);
                             unSaved = true;
                         });
+                        newItem.textarea.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                        });
+                        newItem.element.addEventListener('click', () => {
+                            if (selectedContext) {
+                                selectedContext.element.children[0].children[0].style.background =
+                                    'none';
+                            }
+                            if (selectedContext === newItem) {
+                                newItem.element.children[0].children[0].style.background =
+                                    'none';
+                                selectedContext = undefined;
+                            } else {
+                                newItem.element.children[0].children[0].style.background =
+                                    '#2bb8f4';
+                                selectedContext = newItem;
+                            }
+                        });
                         newItem.element.addEventListener('contextmenu', (e) => {
                             e.preventDefault();
                             deleteListItem = newItem;
@@ -167,16 +189,6 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
                         newItem.textarea.value = text;
                         newItem.textarea.dispatchEvent(new Event('input'));
                         return newItem;
-                    }
-                    function viewingMode() {
-                        contextCheck.remove();
-                        contextPlaceHolder.remove();
-                        contextBox.appendChild(contextEdit);
-                        contextList.forEach((li) => {
-                            li.element.children[0].children[0].style.pointerEvents =
-                                'all';
-                            li.textarea.style.pointerEvents = 'none';
-                        });
                     }
                     const response = await chrome.runtime.sendMessage({
                         action: 'get-lists',
