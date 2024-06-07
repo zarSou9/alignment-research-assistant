@@ -5,13 +5,15 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
     ) {
         await new Promise((resolve) => setTimeout(() => resolve(), 370));
         const input = document.getElementById('prompt-textarea');
-        if (input?.blur) input.blur();
-        input.value =
-            (request.context ? request.context + '\n\n' : '') +
-            (request.prompt || '');
-        if (input?.focus) input.focus();
-        input.style.height = '100px';
-        if (input?.dispatchEvent)
-            input.dispatchEvent(new Event('keydown', { key: 'Enter' }));
+        if (input) {
+            input.blur();
+            input.value =
+                (request.context ? request.context : '') +
+                (request.context && request.prompt ? '\n\n' : '') +
+                (request.prompt || '');
+            input.focus();
+            const event = new Event('input', { bubbles: true });
+            input.dispatchEvent(event);
+        }
     }
 });

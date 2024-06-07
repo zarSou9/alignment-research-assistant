@@ -81,6 +81,8 @@ chrome.commands.onCommand.addListener((command) => {
                 );
             }
         })();
+    } else if (command === 'open-gpt') {
+        chrome.tabs.create({ url: 'https://chatgpt.com' });
     }
 });
 

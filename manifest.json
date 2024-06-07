@@ -51,6 +51,13 @@
                 "mac": "Alt+Space"
             },
             "description": "Open extension modal"
+        },
+        "open-gpt": {
+            "suggested_key": {
+                "default": "Alt+L",
+                "mac": "Alt+L"
+            },
+            "description": "Open chat gpt"
         }
     }
 }
