@@ -117,6 +117,7 @@
     color: black;
     font-size: 18px;
     height: 50px;
+    background: #efefef;
 }
 
 #ext-start-chat-button:hover {
@@ -135,6 +136,7 @@
     background-color: #efefef;
     font-family: 'Roboto', sans-serif;
     font-weight: 400;
+    margin: 0;
 }
 
 .ext-edit-button {
@@ -146,6 +148,7 @@
     padding: 0 3px 0 3px;
     border: none;
     outline: none;
+    line-height: 0;
 }
 
 .ext-check-button {
@@ -157,6 +160,7 @@
     padding: 0 3px 0 3px;
     border: none;
     outline: none;
+    line-height: 0;
 }
 
 .ext-list-dot-dotted {
@@ -190,6 +194,7 @@
     border-radius: 10px;
     width: 318px;
     cursor: text;
+    background: #efefef;
 }
 
 .ext-list-text-area {
@@ -210,6 +215,7 @@
     pointer-events: none;
     font-family: 'Roboto', sans-serif;
     line-height: 150%;
+    background: white;
 }
 .ext-list-text-area::selection {
     background: #0091ff45;
@@ -227,6 +233,8 @@
     font-size: 13px;
     padding-left: 6px;
     padding-right: 6px;
+    border: none;
+    outline: none;
 }
 .ext-delete-list-item-button:hover {
     background: #ca3838;
@@ -250,6 +258,8 @@
     display: flex;
     align-items: center;
     margin-bottom: 10px;
+    border: none;
+    outline: none;
 }
 
 .ext-text-bold {
