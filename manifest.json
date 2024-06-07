@@ -25,6 +25,10 @@
             "matches": ["<all_urls>"],
             "js": ["content.js"],
             "css": ["components/modal/styles.css"]
+        },
+        {
+            "matches": ["https://chatgpt.com/*"],
+            "js": ["scripts/chat.js"]
         }
     ],
     "web_accessible_resources": [
@@ -41,19 +45,12 @@
         "service_worker": "dist/background.bundle.js"
     },
     "commands": {
-        "open-tab": {
+        "open-modal": {
             "suggested_key": {
                 "default": "Alt+Space",
                 "mac": "Alt+Space"
             },
-            "description": "Open developer.chrome.com"
-        },
-        "open-modal": {
-            "suggested_key": {
-                "default": "Alt+S",
-                "mac": "Alt+S"
-            },
-            "description": "Set text in the active tab"
+            "description": "Open extension modal"
         }
     }
 }

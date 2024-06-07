@@ -59,9 +59,7 @@ supabase.auth.onAuthStateChange(async (event, session) => {
 });
 
 chrome.commands.onCommand.addListener((command) => {
-    if (command === 'open-tab') {
-        chrome.tabs.create({ url: 'https://chatgpt.com' });
-    } else if (command === 'open-modal') {
+    if (command === 'open-modal') {
         (async () => {
             try {
                 const [tab] = await chrome.tabs.query({
@@ -136,7 +134,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             });
             sendResponse({ signedOut: true });
         });
-    } else if (request.action === 'update-context') {
+    } else if (request.action === 'update-lists') {
         supabase.auth.getSession().then(({ data }) => {
             if (!data?.session) {
                 supabase.auth.signOut().then(() => {
@@ -148,9 +146,16 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                 delete context.element;
                 delete context.textarea;
             });
+            request.promptList.forEach((prompt) => {
+                delete prompt.element;
+                delete prompt.textarea;
+            });
             supabase
                 .from('users')
-                .update({ contexts: request.contextList })
+                .update({
+                    contexts: request.contextList,
+                    prompts: request.promptList,
+                })
                 .eq('id', data.session.user.id)
                 .then(() => {
                     // handle successful update
@@ -173,6 +178,16 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                         sendResponse({ dbLists: listData[0] });
                     });
             }
+        });
+    } else if (request.action === 'go-to-gpt') {
+        chrome.tabs.create({ url: 'https://chatgpt.com' }, (tab) => {
+            setTimeout(() => {
+                chrome.tabs.sendMessage(tab.id, {
+                    action: 'dump-prompt',
+                    context: request.context,
+                    prompt: request.prompt,
+                });
+            }, 1000);
         });
     }
     return true;

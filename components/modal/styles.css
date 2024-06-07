@@ -9,7 +9,7 @@
     background-color: rgba(0, 0, 0, 0.58);
     top: 0;
     left: 0;
-    color: white !important;
+    color: white;
 }
 
 .ext-modal-content {
@@ -21,7 +21,7 @@
 }
 
 .ext-modal-header {
-    border-radius: 25px 25px 0 0 !important;
+    border-radius: 25px 25px 0 0;
     background-color: #2bb8f4;
     height: 40px;
     width: 100%;
@@ -39,12 +39,14 @@
 }
 
 .ext-nav-text {
-    background: #2bb8f4 !important;
-    font-size: 17px !important;
-    color: white !important;
-    border: none !important;
-    outline: none !important;
+    background: #2bb8f4;
+    font-size: 17px;
+    color: white;
+    border: none;
+    outline: none;
     cursor: pointer;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
 }
 
 .ext-modal-button-left {
@@ -83,7 +85,7 @@
 .ext-list-holder {
     overflow: auto;
     flex-grow: 1;
-    padding: 8px 20px 0 20px;
+    padding: 8px 20px 24px 20px;
     scrollbar-color: #8a8a8a #e2e2e2;
 }
 
@@ -131,6 +133,8 @@
     top: -1px;
     transform: translateY(-50%);
     background-color: #efefef;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
 }
 
 .ext-edit-button {
@@ -140,8 +144,8 @@
     transform: translateY(-50%);
     background-color: #efefef;
     padding: 0 3px 0 3px;
-    border: none !important;
-    outline: none !important;
+    border: none;
+    outline: none;
 }
 
 .ext-check-button {
@@ -151,8 +155,8 @@
     transform: translateY(-50%);
     background-color: #efefef;
     padding: 0 3px 0 3px;
-    border: none !important;
-    outline: none !important;
+    border: none;
+    outline: none;
 }
 
 .ext-list-dot-dotted {
@@ -193,22 +197,28 @@
     color: black;
     overflow: hidden;
     resize: none;
-    outline: none !important;
-    padding: 0 !important;
-    border: none !important;
-    padding: 7px 14px 7px 0px !important;
+    outline: none;
+    padding: 0;
+    border: none;
+    padding: 7px 14px 7px 0px;
     height: 42px;
-    min-height: 0 !important;
+    min-height: 0;
     width: 268px;
     border-radius: 0px 10px 10px 0px;
     margin-left: 50px;
     box-sizing: border-box;
     pointer-events: none;
+    font-family: 'Roboto', sans-serif;
+    line-height: 150%;
 }
+.ext-list-text-area::selection {
+    background: #0091ff45;
+}
+
 .ext-list-text-area:focus {
-    outline: none !important;
-    border: none !important;
-    box-shadow: none !important;
+    outline: none;
+    border: none;
+    box-shadow: none;
 }
 
 .ext-delete-list-item-button {
