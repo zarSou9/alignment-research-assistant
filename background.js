@@ -168,6 +168,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         });
     } else if (request.action === 'get-lists') {
         supabase.auth.getSession().then(({ data }) => {
+            console.log(data?.session);
             if (!data?.session) {
                 sendResponse({ signedOut: true });
             } else {
@@ -187,24 +188,9 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                     action: 'dump-prompt',
                     context: request.context,
                     prompt: request.prompt,
-                    pdf: request.pdf,
                 });
             }, 1000);
         });
-    } else if (request.action === 'downloadPDF') {
-        fetch(request.url)
-            .then((response) => response.blob())
-            .then((blob) => {
-                const reader = new FileReader();
-                reader.onloadend = () => {
-                    const base64data = reader.result.split(',')[1];
-                    chrome.storage.local.set(
-                        { downloadedFile: base64data },
-                        () => sendResponse({ success: true })
-                    );
-                };
-                reader.readAsDataURL(blob);
-            });
     }
     return true;
 });
