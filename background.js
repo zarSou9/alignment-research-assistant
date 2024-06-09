@@ -188,6 +188,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                     action: 'dump-prompt',
                     context: request.context,
                     prompt: request.prompt,
+                    selectedText: request.selectedText,
                 });
             }, 1000);
         });

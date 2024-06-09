@@ -82,6 +82,34 @@
     flex-direction: column;
 }
 
+.ext-extra-body {
+    border-radius: 10px;
+    border: 1px solid #2da2d4;
+    position: relative;
+    height: 55px;
+    margin: 20px 20px 0px 20px;
+    display: flex;
+    align-items: center;
+}
+
+.ext-extra-text-selection-box {
+    border-radius: 10px;
+    border: 1px solid #1f1f1f;
+    margin-left: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    padding: 15px 8px;
+}
+
+.extension-extra-text-p {
+    color: #292929;
+    font-size: 13px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    margin-left: 6px;
+}
+
 .ext-list-holder {
     overflow: auto;
     flex-grow: 1;
@@ -127,7 +155,7 @@
 
 .ext-context-text {
     position: absolute;
-    padding: 4px;
+    padding: 0px 4px;
     color: #3582a3;
     font-size: 14px;
     left: 20px;

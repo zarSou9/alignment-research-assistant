@@ -18,6 +18,13 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
             fetch(chrome.runtime.getURL('components/modal/index.html'))
                 .then((response) => response.text())
                 .then(async (html) => {
+                    let selectedText;
+                    try {
+                        const selection = window.getSelection();
+                        const range = selection.getRangeAt(0);
+                        selectedText = range.toString();
+                    } catch (error) {}
+
                     const container = document.createElement('div');
                     container.id = 'extension-container';
                     container.innerHTML = html;
@@ -78,6 +85,15 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
                     const startChatButton = document.getElementById(
                         'ext-start-chat-button'
                     );
+                    const extraBox = document.getElementById(
+                        'extension-extra-box'
+                    );
+                    const extraSelectionBox = document.getElementById(
+                        'extension-extra-text-selection-box'
+                    );
+                    const extraSelectionCancelButton = document.getElementById(
+                        'extension-extra-text-selection-cancel'
+                    );
 
                     const contextList = [];
                     const promptList = [];
@@ -99,6 +115,13 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
                     contextEdit.disabled = true;
                     promptEdit.disabled = true;
                     contextEdit.children[0].style.stroke = '#000000';
+
+                    if (!selectedText) extraBox.remove();
+
+                    extraSelectionCancelButton.addEventListener('click', () => {
+                        extraSelectionBox.remove();
+                        selectedText = '';
+                    });
 
                     async function updateLists() {
                         const response = await chrome.runtime.sendMessage({
@@ -394,11 +417,13 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
                             action: 'go-to-gpt',
                             context: selectedContext?.text,
                             prompt: selectedPrompt?.text,
+                            selectedText,
                         });
                     }
                     startChatButton.addEventListener('click', goToGPT);
                     handleEnter = (e) => {
                         if (e.key === 'Enter') {
+                            e.preventDefault();
                             goToGPT();
                         }
                     };
