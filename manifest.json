@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "Alignment Research Assistant",
-    "description": "Base Level Extension",
+    "description": "Technical Alignment Research Assistant (TARA), is a context holder for chatGPT targeted towards those working on AI Alignment. You can add context and prompt items which save time when curating prompts. Highlighted text, and youtube transcipts can automatically be added to prompts. The tool can be opened with a simple shortcut: (Alt + Space), or (Option + Space) on mac. More features specifically catered towards alignement researchers to come. This is a crude prototype, expect bugs.",
     "version": "1.0",
     "action": {
         "default_popup": "components/popup/index.html",
