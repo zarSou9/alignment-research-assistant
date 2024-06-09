@@ -78,6 +78,9 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
                     const startChatButton = document.getElementById(
                         'ext-start-chat-button'
                     );
+                    const pdfEmbed = document.querySelector(
+                        'embed[type="application/pdf"]'
+                    );
 
                     const contextList = [];
                     const promptList = [];
@@ -105,6 +108,7 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
                             action: 'update-lists',
                             contextList,
                             promptList,
+                            pdf: !!pdfEmbed,
                         });
                         if (response?.signedOut) closeModal(container);
                     }
@@ -389,11 +393,21 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
 
                     chrome.runtime.onMessage.addListener(handleActions);
 
+                    if (pdfEmbed) {
+                        const pdfUrl = window.location.href;
+                        const response = await chrome.runtime.sendMessage({
+                            action: 'downloadPDF',
+                            url: pdfUrl,
+                        });
+                    }
+
                     function goToGPT() {
+                        const pdfUrl = window.location.href;
                         chrome.runtime.sendMessage({
                             action: 'go-to-gpt',
                             context: selectedContext?.text,
                             prompt: selectedPrompt?.text,
+                            pdf: pdfUrl,
                         });
                     }
                     startChatButton.addEventListener('click', goToGPT);
