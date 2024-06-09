@@ -157,7 +157,13 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                     contexts: request.contextList,
                     prompts: request.promptList,
                 })
-                .eq('id', data.session.user.id);
+                .eq('id', data.session.user.id)
+                .then(() => {
+                    sendResponse({ success: true });
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
         });
     } else if (request.action === 'get-lists') {
         supabase.auth.getSession().then(({ data }) => {
