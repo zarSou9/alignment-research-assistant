@@ -94,6 +94,18 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
                     const extraSelectionCancelButton = document.getElementById(
                         'extension-extra-text-selection-cancel'
                     );
+                    const extraYtBox = document.getElementById(
+                        'extension-extra-yt-box'
+                    );
+                    const extraYtCancelButton = document.getElementById(
+                        'extension-extra-yt-cancel'
+                    );
+                    const ytSpinner = document.getElementById(
+                        'extension-yt-loading-spinner'
+                    );
+                    const ytP = document.getElementById(
+                        'extension-extra-yt-text-p'
+                    );
 
                     const contextList = [];
                     const promptList = [];
@@ -116,7 +128,29 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
                     promptEdit.disabled = true;
                     contextEdit.children[0].style.stroke = '#000000';
 
-                    if (!selectedText) extraBox.remove();
+                    let youtubeURL = window.location.href;
+                    if (
+                        youtubeURL.includes('https://www.youtube.com/watch?v=')
+                    ) {
+                        extraSelectionBox.remove();
+                        extraYtCancelButton.remove();
+                        chrome.runtime
+                            .sendMessage({
+                                action: 'get-yt-transcript',
+                                url: youtubeURL,
+                            })
+                            .then((response) => {
+                                selectedText = response?.transcript;
+                                extraYtBox.insertBefore(
+                                    extraYtCancelButton,
+                                    ytP
+                                );
+                                ytSpinner.remove();
+                            });
+                    } else {
+                        if (!selectedText) extraBox.remove();
+                        else extraYtBox.remove();
+                    }
 
                     extraSelectionCancelButton.addEventListener('click', () => {
                         extraSelectionBox.remove();
@@ -434,5 +468,5 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
                 });
         }
     }
-    return true; // Required to indicate that the response is asynchronous
+    return true;
 });

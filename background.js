@@ -1,5 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 import { supabaseUrl, supabaseKey } from './supa_creds';
+import { YoutubeTranscript } from 'youtube-transcript';
+
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 const { session } = await chrome.storage.local.get('session');
@@ -33,7 +35,6 @@ supabase.auth.onAuthStateChange(async (event, session) => {
                 refresh_token: session.refresh_token,
             },
         });
-        // Check if user data exists in your custom user table
         const { data: userData, error: userError } = await supabase
             .from('users')
             .select('*')
@@ -41,7 +42,6 @@ supabase.auth.onAuthStateChange(async (event, session) => {
             .single();
 
         if (userError && userError.code === 'PGRST116') {
-            // If user data does not exist, insert it
             const { error: insertError } = await supabase.from('users').insert([
                 {
                     id: user.id,
@@ -95,7 +95,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             },
             async (redirectedTo) => {
                 if (chrome.runtime.lastError) {
-                    // auth was not successful
                 } else {
                     const url = new URL(redirectedTo);
                     const params = new URLSearchParams(
@@ -158,17 +157,10 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                     contexts: request.contextList,
                     prompts: request.promptList,
                 })
-                .eq('id', data.session.user.id)
-                .then(() => {
-                    // handle successful update
-                })
-                .catch((error) => {
-                    // handle error
-                });
+                .eq('id', data.session.user.id);
         });
     } else if (request.action === 'get-lists') {
         supabase.auth.getSession().then(({ data }) => {
-            console.log(data?.session);
             if (!data?.session) {
                 sendResponse({ signedOut: true });
             } else {
@@ -191,6 +183,12 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                     selectedText: request.selectedText,
                 });
             }, 1000);
+        });
+    } else if (request.action === 'get-yt-transcript') {
+        YoutubeTranscript.fetchTranscript(request.url).then((response) => {
+            sendResponse({
+                transcript: response.map((tr) => tr.text).join(' '),
+            });
         });
     }
     return true;
